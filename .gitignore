@@ -1,0 +1,56 @@
+# Build results
+bin/
+obj/
+[Bb]uild/
+[Ll]og/
+TestResults/
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+*.sln.iml
+
+# Visual Studio
+.vs/
+.vscode/
+*.dbmdl
+*.pdb
+*.cache
+*.sdf
+*.opensdf
+*.VC.db
+*.VC.VC.opendb
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Others
+_ReSharper*/
+*.DotSettings.user
+*.DotSettings
+*.orig
+
+# WPF specific
+*.g.i.cs
+*.g.cs
+*.xaml.cs~
+
+# OS generated
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Publish
+publish/
