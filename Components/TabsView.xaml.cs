@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace GreenhouseDesktopApp.Views
+namespace GreenhouseDesktopApp.Components
 {
     /// <summary>
-    /// Interaction logic for UserControl1.xaml
+    /// Interaction logic for TabsView.xaml
     /// </summary>
-    public partial class UserControl1 : UserControl
+    public partial class TabsView : UserControl
     {
-        public UserControl1()
+        public TabsView()
         {
             InitializeComponent();
         }
