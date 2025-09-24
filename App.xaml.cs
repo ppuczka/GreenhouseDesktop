@@ -1,27 +1,34 @@
-﻿using GreenhouseDesktopApp.Services;
+﻿using GreenhouseDesktopApp.Configuration;
+using GreenhouseDesktopApp.Services;
 using Microsoft.Extensions.DependencyInjection;
-using System.Configuration;
-using System.Data;
+using Microsoft.Extensions.Hosting;
 using System.Windows;
 
 namespace GreenhouseDesktopApp;
 
-/// <summary>
-/// Interaction logic for App.xaml
-/// </summary>
 public partial class App : Application
 {
-    private IServiceProvider? _serviceProvider;
+    private IHost? _host;
 
-    protected override void OnStartup(StartupEventArgs e)
+    protected override async void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
+
+        // Create and configure the host
+        _host = ServiceConfiguration.CreateHost();
+        
+        // Configure additional services
         var serviceCollection = new ServiceCollection();
         ConfigureServices(serviceCollection);
+        
+        // Build service provider
+        var serviceProvider = serviceCollection.BuildServiceProvider();
 
-        _serviceProvider = serviceCollection.BuildServiceProvider();
+        // Start the host
+        await _host.StartAsync();
 
-        var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
+        // Show main window
+        var mainWindow = serviceProvider.GetRequiredService<MainWindow>();
         mainWindow.Show();
     }
 
@@ -29,18 +36,25 @@ public partial class App : Application
     {
         services.AddLogging();
 
+        // Configure all services using the extension method
+        services.ConfigureServices();
+
+        // Add windows
         services.AddSingleton<MainWindow>();
 
+        // Add other services
         services.AddSingleton<IIotHubService, IotHubService>();
     }
 
-    private void OnExit(object sender, ExitEventArgs e)
+    protected override async void OnExit(ExitEventArgs e)
     {
-        // Dispose of services if needed
-        if (_serviceProvider is IDisposable disposable)
+        if (_host != null)
         {
-            disposable.Dispose();
+            await _host.StopAsync();
+            _host.Dispose();
         }
+        
+        base.OnExit(e);
     }
 }
 

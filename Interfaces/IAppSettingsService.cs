@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace GreenhouseDesktopApp.Interfaces
 {
-    interface IAppSettingsService
+    public interface IAppSettingsService
     {
-        Dictionary<string, string> LoadAppSettings();
-
-        void SaveAppSettings(Dictionary<string, string> settings);
-
-        string GetSetting(string key);
+        Task<T> GetSettingAsync<T>(string key, T defaultValue = default!);
+        Task SetSettingAsync<T>(string key, T value);
+        Task<bool> RemoveSettingAsync(string key);
+        Task SaveAsync();
+        Task LoadAsync();
+        Task LoadAsync(string filePath);
+        Task ResetToDefaultsAsync();
+        bool HasSetting(string key);
     }
 }
